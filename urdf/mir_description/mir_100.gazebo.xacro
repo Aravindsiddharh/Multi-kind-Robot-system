@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+ <xacro:macro name="diff_controller_plugin_gazebo" params="prefix left_wheel_joint right_wheel_joint wheel_separation wheel_radius">
+    <gazebo>
+      <plugin name="${prefix}_diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+        <ros>
+          <namespace>${prefix}</namespace>
+          <remapping>cmd_vel:=cmd_vel</remapping>
+          <remapping>odom:=odom</remapping>
+        </ros>
+        <legacyMode>false</legacyMode>
+        <always_on>true</always_on>
+        <update_rate>30.0</update_rate>
+        <left_joint>${left_wheel_joint}</left_joint>
+        <right_joint>${right_wheel_joint}</right_joint>
+        <wheel_separation>${wheel_separation}</wheel_separation>
+        <wheel_diameter>${2*wheel_radius}</wheel_diameter>
+        <max_wheel_torque>20</max_wheel_torque>
+        <publish_tf>true</publish_tf>
+        <odometry_frame>${prefix}/odom</odometry_frame>
+        <!-- <command_topic>cmd_vel</command_topic> -->
+        <odometry_topic>${prefix}/odom</odometry_topic>
+        <robot_base_frame>${prefix}/base_footprint</robot_base_frame>
+        <wheel_acceleration>2.8</wheel_acceleration>
+        <publish_wheel_joint_state>true</publish_wheel_joint_state>
+        <publish_wheel_tf>true</publish_wheel_tf>
+        <publish_odom_tf>true</publish_odom_tf>
+        <!-- <odometry_source>world</odometry_source> -->
+        <ros_debug_level>Debug</ros_debug_level>
+
+        <!-- <xacro:if value="${odometry_source == 'world'}">
+            <odometry_source>1</odometry_source>
+        </xacro:if>
+        <xacro:if value="${odometry_source == 'encoder'}">
+            <odometry_source>0</odometry_source>
+        </xacro:if> -->
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="set_wheel_friction" params="link friction">
+    <gazebo reference="${link}">
+      <mu1 value="${friction}"/>
+      <mu2 value="${friction}"/>
+      <kp value="10000000.0"/>
+      <kd value="1.0"/>
+      <minDepth>0.01</minDepth>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="set_all_wheel_frictions" params="prefix">
+    <xacro:set_wheel_friction link="${prefix}/left_wheel_link" friction="200"/>
+    <xacro:set_wheel_friction link="${prefix}/right_wheel_link" friction="200"/>
+    <xacro:set_wheel_friction link="${prefix}/fl_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction link="${prefix}/fr_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction link="${prefix}/bl_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction link="${prefix}/br_caster_wheel_link" friction="1"/>
+  </xacro:macro>
+
+  <xacro:macro name="p3d_base_controller" params="prefix">
+    <gazebo>
+      <plugin name="${prefix}_p3d_base_controller" filename="libgazebo_ros_p3d.so">
+        <ros>
+          <namespace>${prefix}</namespace>
+          <remapping>odom:=base_pose_ground_truth</remapping>
+        </ros>
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <body_name>${prefix}/base_footprint</body_name>
+        <!-- <topicName>base_pose_ground_truth</topicName> -->
+        <gaussian_noise>0.01</gaussian_noise>
+        <frame_name>map</frame_name>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+</robot>
+
+
+
+
+
+
+
+<!-- 
+  <xacro:macro name="diff_controller_plugin_gazebo"
+               params="prefix left_wheel_joint right_wheel_joint wheel_separation wheel_radius">
+
+    <gazebo>
+      <plugin name="${prefix}diff_drive_controller"
+              filename="libgazebo_ros_diff_drive.so">
+
+        <namespace>${prefix}</namespace>
+
+        <legacy_mode>false</legacy_mode>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>1000.0</updateRate>
+
+        <left_joint>${prefix}${left_wheel_joint}</left_joint>
+        <right_joint>${prefix}${right_wheel_joint}</right_joint>
+
+        <wheel_separation>${wheel_separation}</wheel_separation>
+        <wheel_diameter>${2 * wheel_radius}</wheel_diameter>
+        <max_wheel_torque>10</max_wheel_torque>
+
+        <odometry_frame>${prefix}odom</odometry_frame>
+        <robot_base_frame>${prefix}base_footprint</robot_base_frame>
+
+        <command_topic>cmd_vel</command_topic>
+        <odometry_topic>odom</odometry_topic>
+
+        <publishTf>1</publishTf>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>true</publish_wheel_tf>
+        <wheelAcceleration>2.8</wheelAcceleration>
+        <odometrySource>world</odometrySource>
+
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+
+
+  <xacro:macro name="set_wheel_friction" params="prefix link friction">
+    <gazebo reference="${prefix}${link}">
+      <mu1>${friction}</mu1>
+      <mu2>${friction}</mu2>
+      <kp>10000000.0</kp>
+      <kd>1.0</kd>
+      <minDepth>0.01</minDepth>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="set_all_wheel_frictions" params="prefix">
+    <xacro:set_wheel_friction prefix="${prefix}" link="left_wheel_link" friction="200"/>
+    <xacro:set_wheel_friction prefix="${prefix}" link="right_wheel_link" friction="200"/>
+    <xacro:set_wheel_friction prefix="${prefix}" link="fl_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction prefix="${prefix}" link="fr_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction prefix="${prefix}" link="bl_caster_wheel_link" friction="1"/>
+    <xacro:set_wheel_friction prefix="${prefix}" link="br_caster_wheel_link" friction="1"/>
+  </xacro:macro>
+
+
+
+
+  <xacro:macro name="p3d_base_controller" params="prefix">
+    <gazebo>
+      <plugin name="${prefix}p3d_base_controller"
+              filename="libgazebo_ros_p3d.so">
+
+        <robotNamespace>${prefix}</robotNamespace>
+
+        <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+
+        <bodyName>${prefix}base_footprint</bodyName>
+
+        <topicName>base_pose_ground_truth</topicName>
+
+        <gaussianNoise>0.01</gaussianNoise>
+        <frameName>map</frameName>
+
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+</robot> -->
