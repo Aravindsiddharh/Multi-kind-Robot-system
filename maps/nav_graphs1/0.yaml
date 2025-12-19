@@ -1,0 +1,149 @@
+building_name: new_warehouse
+levels:
+  L1:
+    lanes:
+    - - 0
+      - 1
+      - {speed_limit: 0}
+    - - 1
+      - 0
+      - {speed_limit: 0}
+    - - 1
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 1
+      - {speed_limit: 0}
+    - - 2
+      - 3
+      - {speed_limit: 0}
+    - - 3
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 2
+      - {speed_limit: 0}
+    - - 4
+      - 5
+      - {speed_limit: 0}
+    - - 5
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 6
+      - {speed_limit: 0}
+    - - 6
+      - 4
+      - {speed_limit: 0}
+    - - 1
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 1
+      - {speed_limit: 0}
+    - - 7
+      - 8
+      - {speed_limit: 0}
+    - - 8
+      - 7
+      - {speed_limit: 0}
+    - - 8
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 8
+      - {speed_limit: 0}
+    - - 7
+      - 9
+      - {speed_limit: 0}
+    - - 9
+      - 7
+      - {speed_limit: 0}
+    - - 9
+      - 10
+      - {speed_limit: 0}
+    - - 10
+      - 9
+      - {speed_limit: 0}
+    - - 7
+      - 11
+      - {speed_limit: 0}
+    - - 11
+      - 7
+      - {speed_limit: 0}
+    - - 8
+      - 12
+      - {speed_limit: 0}
+    - - 12
+      - 8
+      - {speed_limit: 0}
+    - - 13
+      - 14
+      - {speed_limit: 0}
+    - - 14
+      - 13
+      - {speed_limit: 0}
+    - - 14
+      - 15
+      - {speed_limit: 0}
+    - - 15
+      - 14
+      - {speed_limit: 0}
+    - - 11
+      - 8
+      - {speed_limit: 0}
+    - - 8
+      - 11
+      - {speed_limit: 0}
+    vertices:
+    - - -6.085611228750103
+      - -3.7785854464974236
+      - {is_charger: true, is_holding_point: true, name: robot1_charger}
+    - - -3.375165623594558
+      - -3.7785854464974236
+      - {name: ''}
+    - - -3.375165623594558
+      - 0.3575520454050043
+      - {name: ''}
+    - - -5.897593608368478
+      - 0.3575520454050043
+      - {is_charger: true, is_holding_point: true, name: robot2_charger}
+    - - -3.3908754513752495
+      - 5.903671596273625
+      - {name: ''}
+    - - -5.944572997814554
+      - 5.903671596273625
+      - {dropoff_ingestor: boxes, name: drop_point1}
+    - - -3.3805189725516733
+      - 8.409489189890893
+      - {is_parking_spot: true, name: parking2}
+    - - 0.7329543410556845
+      - -3.7641764324820173
+      - {name: junction1}
+    - - 0.7329543410556845
+      - 0.3492968811253405
+      - {name: jucntion2}
+    - - 0.7681263440169079
+      - -5.377635783117199
+      - {name: ''}
+    - - 0.798345248410337
+      - -9.701940989297249
+      - {is_parking_spot: true, name: parking1}
+    - - 0.7076385039313884
+      - -2.71652103844497
+      - {name: ''}
+    - - 0.7379074396234806
+      - 7.08125827294268
+      - {name: pickup_point1, pickup_dispenser: boxes}
+    - - 0.7379074396234806
+      - 1.910223368162681
+      - {name: ''}
+    - - 3.761899193510171
+      - 1.9404422725561083
+      - {name: ''}
+    - - 5.939161248796907
+      - 1.9707112082482006
+      - {name: ''}

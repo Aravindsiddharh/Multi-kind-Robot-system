@@ -1,0 +1,113 @@
+building_name: warehouse
+levels:
+  L1:
+    lanes:
+    - - 0
+      - 1
+      - {speed_limit: 0}
+    - - 1
+      - 0
+      - {speed_limit: 0}
+    - - 1
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 1
+      - {speed_limit: 0}
+    - - 0
+      - 3
+      - {speed_limit: 0}
+    - - 3
+      - 0
+      - {speed_limit: 0}
+    - - 3
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 3
+      - {speed_limit: 0}
+    - - 4
+      - 5
+      - {speed_limit: 0}
+    - - 5
+      - 4
+      - {speed_limit: 0}
+    - - 1
+      - 6
+      - {speed_limit: 0}
+    - - 6
+      - 1
+      - {speed_limit: 0}
+    - - 6
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 6
+      - {speed_limit: 0}
+    - - 7
+      - 8
+      - {speed_limit: 0}
+    - - 8
+      - 7
+      - {speed_limit: 0}
+    - - 4
+      - 9
+      - {speed_limit: 0}
+    - - 9
+      - 4
+      - {speed_limit: 0}
+    - - 9
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 9
+      - {speed_limit: 0}
+    - - 10
+      - 0
+      - {speed_limit: 0}
+    - - 0
+      - 10
+      - {speed_limit: 0}
+    - - 6
+      - 11
+      - {speed_limit: 0}
+    - - 11
+      - 6
+      - {speed_limit: 0}
+    vertices:
+    - - -1.9136005710791046
+      - -4.467399067636816
+      - {is_holding_point: true, is_passthrough_point: false, name: junction2}
+    - - -1.9320505700344892
+      - -0.7200992798041597
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - -0.45530065364619077
+      - -0.7016492808487751
+      - {dropoff_ingestor: drop1, name: drop_point1}
+    - - 3.5319491206007996
+      - -4.467399067636816
+      - {is_holding_point: true, is_passthrough_point: false, name: junction1}
+    - - 3.4950491226900304
+      - -0.7200992798041597
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - 2.350549187490163
+      - -0.7385992787567144
+      - {dropoff_ingestor: drop2, name: drop_point2}
+    - - -1.9320505700344892
+      - 4.227050440094516
+      - {is_holding_point: true, is_passthrough_point: false, name: junction4}
+    - - 0.8553492721464799
+      - 4.2455004390499
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - 1.501399235567952
+      - 5.666900358572045
+      - {name: pickup_point1, pickup_dispenser: pick}
+    - - 3.4581491247792613
+      - 4.300900435913223
+      - {is_holding_point: true, is_passthrough_point: false, name: junction3}
+    - - -7.156150274252609
+      - -4.4858990665893685
+      - {is_charger: true, is_holding_point: true, is_passthrough_point: false, name: robot2_charger}
+    - - -7.229950270074148
+      - 4.227050440094516
+      - {is_charger: true, is_holding_point: true, name: robot1_charger}

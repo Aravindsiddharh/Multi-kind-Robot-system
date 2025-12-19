@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Global Args -->
+  <arg name="use_sim_time" default="false" description="Use the /clock topic for time to sync with simulation"/>
+
+  <!-- ======================================== -->
+  <!-- 1. Common RMF Core -->
+  <!-- ======================================== -->
+  <include file="$(find-pkg-share rmf_demos)/common.launch.xml">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    <arg name="config_file" value="$(find-pkg-share bcr_bot)/maps/warehouse.building.yaml"/>
+    <arg name="viz_config_file" value="$(find-pkg-share rmf_visualization_schedule)/config/rmf.rviz"/>
+
+  </include>
+
+  <!-- ======================================== -->
+  <!-- 2. BCR Fleet Adapter (ALL ARGS FROM ORIGINAL) -->
+  <!-- ======================================== -->
+  <group>
+    <include file="$(find-pkg-share rmf_fleet_adapter)/fleet_adapter.launch.xml">
+
+      <!-- REQUIRED (no default) -->
+      <arg name="control_type"              value="full_control"/>
+      <arg name="fleet_name"                value="BCR_Fleet"/>
+      <arg name="linear_velocity"           value="0.8"/>
+      <arg name="angular_velocity"          value="1.0"/>
+      <arg name="linear_acceleration"       value="0.5"/>
+      <arg name="angular_acceleration"      value="1.0"/>
+      <arg name="footprint_radius"          value="0.4"/>
+      <arg name="vicinity_radius"           value="0.8"/>
+      <arg name="battery_voltage"           value="24.0"/>
+      <arg name="battery_capacity"          value="20.0"/>
+      <arg name="battery_charging_current"  value="5.0"/>
+      <arg name="mass"                      value="50.0"/>
+      <arg name="inertia"                   value="10.0"/>
+      <arg name="friction_coefficient"      value="0.8"/>
+      <arg name="ambient_power_drain"       value="50.0"/>     <!-- W -->
+      <arg name="tool_power_drain"          value="0.0"/>      <!-- W (no tool) -->
+
+      <!-- REQUIRED for full_control -->
+      <arg name="nav_graph_file"            value="$(find-pkg-share bcr_bot)/maps/nav_graphs/0.yaml"/>
+      <arg name="map_name"                  value="warehouse"/>
+
+      <!-- OPTIONAL (with defaults from original) -->
+      <arg name="use_sim_time"              value="$(var use_sim_time)"/>
+      <arg name="delay_threshold"           value="10.0"/>
+      <arg name="disable_delay_threshold"   value="false"/>
+      <arg name="retry_wait"                value="10.0"/>
+      <arg name="discovery_timeout"         value="10.0"/>
+      <arg name="reversible"                value="true"/>
+      <arg name="output"                    value="screen"/>
+
+      <arg name="perform_loop"              value="false"/>
+      <arg name="perform_deliveries"        value="false"/>
+      <arg name="perform_cleaning"          value="false"/>
+      <arg name="finishing_request"         value="nothing"/>
+
+      <arg name="drain_battery"             value="false"/>
+      <arg name="recharge_threshold"        value="0.2"/>
+      <arg name="recharge_soc"              value="1.0"/>
+
+      <arg name="experimental_lift_watchdog_service" value=""/>
+      <arg name="enable_responsive_wait"    value="true"/>
+      <arg name="server_uri"                value=""/>
+    </include>
+  </group>
+
+  <!-- ======================================== -->
+  <!-- 3. Robot State Aggregator -->
+  <!-- ======================================== -->
+  <include file="$(find-pkg-share rmf_fleet_adapter)/robot_state_aggregator.launch.xml">
+    <arg name="fleet_name"    value="BCR_Fleet"/>
+    <arg name="robot_prefix"  value="robot"/>
+    <arg name="use_sim_time"  value="$(var use_sim_time)"/>
+  </include>
+
+</launch>

@@ -1,0 +1,95 @@
+building_name: warehouse
+levels:
+  L1:
+    lanes:
+    - - 0
+      - 1
+      - {speed_limit: 0}
+    - - 1
+      - 0
+      - {speed_limit: 0}
+    - - 1
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 1
+      - {speed_limit: 0}
+    - - 2
+      - 3
+      - {speed_limit: 0}
+    - - 3
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 2
+      - {speed_limit: 0}
+    - - 4
+      - 5
+      - {speed_limit: 0}
+    - - 5
+      - 4
+      - {speed_limit: 0}
+    - - 1
+      - 6
+      - {speed_limit: 0}
+    - - 6
+      - 1
+      - {speed_limit: 0}
+    - - 6
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 6
+      - {speed_limit: 0}
+    - - 7
+      - 5
+      - {speed_limit: 0}
+    - - 5
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 8
+      - {speed_limit: 0}
+    - - 8
+      - 7
+      - {speed_limit: 0}
+    - - 5
+      - 9
+      - {speed_limit: 0}
+    - - 9
+      - 5
+      - {speed_limit: 0}
+    vertices:
+    - - 7.445398899026252
+      - -4.448949068681429
+      - {is_holding_point: true, is_parking_spot: true, name: parking1}
+    - - 3.5319491206007996
+      - -4.467399067636816
+      - {is_holding_point: true, is_passthrough_point: false, name: junction1}
+    - - -1.9136005710791046
+      - -4.467399067636816
+      - {is_holding_point: true, is_passthrough_point: false, name: junction2}
+    - - -7.156150274252609
+      - -4.4858990665893685
+      - {is_charger: true, is_holding_point: true, is_passthrough_point: false, name: robot2_charger}
+    - - -1.9320505700344892
+      - -0.7200992798041597
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - -1.9320505700344892
+      - 4.227050440094516
+      - {is_holding_point: true, is_passthrough_point: false, name: junction4}
+    - - 3.4950491226900304
+      - -0.7200992798041597
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - 3.4581491247792613
+      - 4.300900435913223
+      - {is_holding_point: true, is_passthrough_point: false, name: junction3}
+    - - 7.68534888544059
+      - 4.337800433823992
+      - {is_parking_spot: true, name: parking2}
+    - - -7.229950270074148
+      - 4.227050440094516
+      - {is_charger: true, is_holding_point: true, name: robot1_charger}

@@ -1,0 +1,73 @@
+coordinate_system: reference_image
+crowd_sim:
+  agent_groups:
+    - {agents_name: [], agents_number: 0, group_id: 0, profile_selector: external_agent, state_selector: external_static, x: 0, y: 0}
+  agent_profiles:
+    - {ORCA_tau: 1, ORCA_tauObst: 0.40000000000000002, class: 1, max_accel: 0, max_angle_vel: 0, max_neighbors: 10, max_speed: 0, name: external_agent, neighbor_dist: 5, obstacle_set: 1, pref_speed: 0, r: 0.25}
+  enable: 0
+  goal_sets: []
+  model_types: []
+  obstacle_set: {class: 1, file_name: L1_navmesh.nav, type: nav_mesh}
+  states:
+    - {final: 1, goal_set: -1, name: external_static, navmesh_file_name: ""}
+  transitions: []
+  update_time_step: 0.10000000000000001
+graphs:
+  {}
+levels:
+  L1:
+    drawing:
+      filename: bcr_map.png
+    elevation: 0
+    lanes:
+      - [3, 4, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [4, 5, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [5, 6, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [5, 7, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [7, 8, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [7, 9, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [4, 10, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [10, 11, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [11, 5, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [10, 12, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [12, 13, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [10, 14, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [11, 15, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [16, 17, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [17, 18, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+      - [14, 11, {bidirectional: [4, true], demo_mock_floor_name: [1, ""], demo_mock_lift_name: [1, ""], graph_idx: [2, 0], orientation: [1, ""], speed_limit: [3, 0]}]
+    layers:
+      new_warehouse:
+        color: [1, 0, 0, 0.5]
+        filename: bcr_map.png
+        transform:
+          scale: 0.050000000000000003
+          translation_x: 0.0082000000000000007
+          translation_y: 0.014999999999999999
+          yaw: 0
+        visible: true
+    measurements:
+      - [0, 1, {distance: [3, 29.1096]}]
+      - [0, 2, {distance: [3, 31]}]
+    vertices:
+      - [2.581, 2.7690000000000001, 0, ""]
+      - [584.91099999999994, 2.294, 0, ""]
+      - [2.379, 621.84699999999998, 0, ""]
+      - [164.185, 389.32799999999997, 0, robot1_charger, {is_charger: [4, true], is_holding_point: [4, true]}]
+      - [218.36000000000001, 389.32799999999997, 0, ""]
+      - [218.36000000000001, 306.65699999999998, 0, ""]
+      - [167.94300000000001, 306.65699999999998, 0, robot2_charger, {is_charger: [4, true], is_holding_point: [4, true]}]
+      - [218.04599999999999, 195.804, 0, ""]
+      - [167.00399999999999, 195.804, 0, drop_point1, {dropoff_ingestor: [1, boxes]}]
+      - [218.25299999999999, 145.71899999999999, 0, parking2, {is_parking_spot: [4, true]}]
+      - [300.471, 389.04000000000002, 0, junction1]
+      - [300.471, 306.822, 0, jucntion2]
+      - [301.17399999999998, 421.28899999999999, 0, ""]
+      - [301.77800000000002, 507.721, 0, parking1, {is_parking_spot: [4, true]}]
+      - [299.96499999999997, 368.10000000000002, 0, ""]
+      - [300.56999999999999, 172.267, 0, pickup_point1, {pickup_dispenser: [1, boxes]}]
+      - [300.56999999999999, 275.62299999999999, 0, ""]
+      - [361.012, 275.01900000000001, 0, ""]
+      - [404.52999999999997, 274.41399999999999, 0, ""]
+lifts: {}
+name: new_warehouse

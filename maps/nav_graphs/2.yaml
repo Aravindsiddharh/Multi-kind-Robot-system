@@ -1,0 +1,80 @@
+building_name: warehouse
+levels:
+  L1:
+    lanes:
+    - - 0
+      - 1
+      - {speed_limit: 0}
+    - - 1
+      - 0
+      - {speed_limit: 0}
+    - - 1
+      - 2
+      - {speed_limit: 0}
+    - - 2
+      - 1
+      - {speed_limit: 0}
+    - - 0
+      - 3
+      - {speed_limit: 0}
+    - - 3
+      - 0
+      - {speed_limit: 0}
+    - - 3
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 3
+      - {speed_limit: 0}
+    - - 4
+      - 5
+      - {speed_limit: 0}
+    - - 5
+      - 4
+      - {speed_limit: 0}
+    - - 4
+      - 6
+      - {speed_limit: 0}
+    - - 6
+      - 4
+      - {speed_limit: 0}
+    - - 6
+      - 7
+      - {speed_limit: 0}
+    - - 7
+      - 6
+      - {speed_limit: 0}
+    - - 8
+      - 0
+      - {speed_limit: 0}
+    - - 0
+      - 8
+      - {speed_limit: 0}
+    vertices:
+    - - -1.9320505700344892
+      - -0.7200992798041597
+      - {is_holding_point: true, is_passthrough_point: false, name: ''}
+    - - -1.9433505693946973
+      - 1.87540057324194
+      - {is_holding_point: true, name: ''}
+    - - -0.06340067583506936
+      - 1.8980505719595264
+      - {name: pickpoint2, pickup_dispenser: screws}
+    - - -1.9136005710791046
+      - -4.467399067636816
+      - {is_holding_point: true, is_passthrough_point: false, name: junction2}
+    - - 0.36694929979906377
+      - -4.4665990676821075
+      - {is_holding_point: true, name: ''}
+    - - 0.34429930108147744
+      - -8.385098845821634
+      - {dropoff_ingestor: screws, is_parking_spot: false, name: drop_point3}
+    - - 7.445398899026252
+      - -4.448949068681429
+      - {is_holding_point: true, is_parking_spot: true, name: parking1}
+    - - 7.43379889968303
+      - -1.137049256196983
+      - {is_parking_spot: true, name: parking3}
+    - - -7.288800266742135
+      - -0.7293492792804361
+      - {is_charger: true, is_holding_point: true, is_passthrough_point: false, name: robot3_charger}

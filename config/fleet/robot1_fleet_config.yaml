@@ -1,0 +1,179 @@
+# # FLEET CONFIG =================================================================
+# rmf_fleet:
+#   name: "robot1_fleet"
+#   limits:
+#     linear: [0.4, 0.75]      # velocity [m/s], acceleration [m/s²]
+#     angular: [0.3, 0.75]      # angular velocity [rad/s], angular acceleration [rad/s²]
+#   profile:
+#     footprint: 0.3            # robot radius in meters
+#     vicinity: 0.5             # interaction vicinity radius in meters
+#   reversible: True
+#   battery_system:
+#     voltage: 12.0
+#     capacity: 24.0
+#     charging_current: 5.0
+#   mechanical_system:
+#     mass: 20.0
+#     moment_of_inertia: 10.0
+#     friction_coefficient: 0.22
+#   ambient_system:
+#     power: 20.0
+#   tool_system:
+#     power: 0.0
+#   recharge_threshold: 0.10
+#   recharge_soc: 1.0
+#   publish_fleet_state: 10.0
+#   account_for_battery_drain: True
+
+#   task_capabilities:
+#     loop: True
+#     delivery: True
+#     clean: False
+#   finishing_request: "nothing"    # [park, charge, nothing]
+#   responsive_wait: True
+
+#   robots:
+#     robot1:
+#       rmf_config:
+#       robot_state_update_frequency: 10.0
+#       # start:
+#       #   map_name: "L1"
+#       #   waypoint: "robot1_charger"
+#       #   orientation: 0.0 # radians
+#       charger: "robot1_charger"
+#       responsive_wait: True
+#       navigation_stack: 2
+#       init_timeout_sec: 10
+#       initial_map: "L1"
+#       service_call_timeout_sec: 1.0
+#       map_frame: "map"
+#       robot_frame: "base_footprint"
+#       maps:
+#         L1:
+#           map_url: "http://localhost:8080/new_map.yaml"
+#         initial_pose: [5.0,-8.0, 0.0]  
+#     # robot2:
+#     #   charger: "robot2_charger"
+#     #   responsive_wait: False
+#     #   navigation_stack: 2
+#     #   init_timeout_sec: 10
+#     #   initial_map: "L1"
+#     #   service_call_timeout_sec: 1.0
+#     #   map_frame: "map"
+#     #   robot_frame: "base_footprint"
+#     #   maps:
+#     #     L1:
+#     #       map_url: "/home/siddhu/route_ws/src/bcr_bot/maps/new_map.yaml"
+#     #     initial_pose: [-5.0, -4.0, 0.0]   
+#   robot_state_update_frequency: 10.0
+
+# # TRANSFORM CONFIG =============================================================
+# reference_coordinates:
+#   L1:
+#     rmf: [[0.0, 0.0], [0.0, -24.0], [24.0, 0.0], [24.0, -24.0]]
+#     robot: [[-12.0, 12.0], [-12.0, -12.0], [12.0, 12.0], [12.0, -12.0]]
+
+# # PLUGINS =======================================================================
+# plugins:
+#   hello_world:
+#     module: "free_fleet_examples.actions.hello_world"
+#     actions: ["hello_world", "delayed_hello_world"]
+
+
+
+
+
+
+
+
+
+# Fixed robot1 fleet config — adjustments to prevent automatic go_to_place and reduce junction collisions
+# Key changes made:
+# - responsive_wait kept True (fleet + robot level)
+# - perform_initial_port_allocation & autonomous_initialization disabled to stop auto-onboarding
+# - footprint and vicinity increased to reduce simultaneous-occupancy at junctions
+# - removed any `start:` blocks that force RMF to command initial movement
+# - set robot initial_pose to match charger waypoint coordinates (use exact values from your graph)
+
+# FLEET CONFIG =================================================================
+rmf_fleet:
+  name: "robot1_fleet"
+  limits:
+    linear: [0.4, 0.75]      # velocity [m/s], acceleration [m/s²]
+    angular: [0.3, 0.75]     # angular velocity [rad/s], angular acceleration [rad/s²]
+  profile:
+    footprint: 0.7           # increased robot radius (meters)
+    vicinity: 0.7             # increased interaction vicinity (meters)
+  reversible: True
+  battery_system:
+    voltage: 12.0
+    capacity: 24.0
+    charging_current: 5.0
+  mechanical_system:
+    mass: 20.0
+    moment_of_inertia: 10.0
+    friction_coefficient: 0.22
+  ambient_system:
+    power: 20.0
+  tool_system:
+    power: 0.0
+  recharge_threshold: 0.10
+  recharge_soc: 1.0
+  publish_fleet_state: 10.0
+  account_for_battery_drain: True
+
+  # disable automatic onboarding so RMF doesn't issue initial go_to_place
+  perform_initial_port_allocation: false
+  autonomous_initialization: false
+
+  task_capabilities:
+    loop: True
+    delivery: True
+    clean: False
+  finishing_request: "nothing"    # [park, charge, nothing]
+  responsive_wait: True
+
+  robots:
+    robot1:
+      rmf_config:
+        robot_state_update_frequency: 10.0
+      charger: "robot1_charger"
+      responsive_wait: False
+      navigation_stack: 2
+      init_timeout_sec: 10
+      initial_map: "L1"
+      service_call_timeout_sec: 1.0
+      map_frame: "map"
+      robot_frame: "base_footprint"
+      # map URLs
+      maps:
+        L1:
+          map_url: "http://localhost:8080/new_map.yaml"
+      # set initial_pose to match the charger waypoint exactly to avoid RMF trying to re-position the robot
+      # Replace these coordinates with the exact coordinates of the charger waypoint from your graph if they differ
+     # initial_pose: [4.77005, -7.77295, 2.38  ]
+
+  robot_state_update_frequency: 10.0
+
+# TRANSFORM CONFIG =============================================================
+reference_coordinates:
+  L1:
+    # rmf: [[-12.0, 12.0], [-12.0, -12.0], [12.0, 12.0], [12.0, -12.0]]
+    # robot: [[-12.0, 12.0], [-12.0, -12.0], [12.0, 12.0], [12.0, -12.0]]
+    rmf: [[14.3, 15.7], [-14.3, 15.7], [-14.7, -15.7], [14.3, -15.7]]
+    robot: [[14.3, 15.7], [-14.3, 15.7], [-14.7, -15.7], [14.3, -15.7]]
+
+# PLUGINS =======================================================================
+plugins:
+  hello_world:
+    module: "free_fleet_examples.actions.hello_world"
+    actions: ["hello_world", "delayed_hello_world"]
+
+# Notes / next steps:
+# - If you have a robot2 entry in a separate file or later in this file, apply the same responsive_wait: True and
+#   ensure its initial_pose matches its charger waypoint.
+# - If collisions still occur at a specific junction, consider adding a holding point in your graph for that node:
+#     e.g. [junction_id, {is_holding_point: [4, true]}]
+# - Make sure all components (fleet adapter, Nav2, AMCL, map_server) share the same clock (sim_time vs system time) to
+#   avoid TF extrapolation errors that prevent RMF from building schedules and publishing /schedule_markers.
+# - Restart the fleet adapter after deploying this config.

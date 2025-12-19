@@ -1,0 +1,34 @@
+<?xml version='1.0' ?>
+
+<launch>
+  <arg name="server_uri" default="" description="The URI of the api server to transmit state and task information."/>
+
+  <group>
+    <include file="$(find-pkg-share free_fleet_adapter)/fleet_adapter.launch.xml">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="nav_graph_file" value="$(find-pkg-share bcr_bot)/maps/nav_graphs/0.yaml" />
+      <arg name="config_file" value="$(find-pkg-share bcr_bot)/config/fleet/robot1_fleet_config.yaml"/>
+      <arg name="server_uri" value="$(var server_uri)"/>
+    </include>
+  </group>
+
+  <group>
+    <include file="$(find-pkg-share free_fleet_adapter)/fleet_adapter.launch.xml">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="nav_graph_file" value="$(find-pkg-share bcr_bot)/maps/nav_graphs/0.yaml" />
+      <arg name="config_file" value="$(find-pkg-share bcr_bot)/config/fleet/robot2_fleet_config.yaml"/>
+      <arg name="server_uri" value="$(var server_uri)"/>
+    </include>
+  </group>
+
+  <!-- <group>
+    <include file="$(find-pkg-share free_fleet_adapter)/fleet_adapter.launch.xml">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="nav_graph_file" value="$(find-pkg-share bcr_bot)/maps/nav_graphs/2.yaml" />
+      <arg name="config_file" value="$(find-pkg-share bcr_bot)/config/fleet/robot3_fleet_config.yaml"/>
+      <arg name="server_uri" value="$(var server_uri)"/>
+    </include>
+  </group> -->
+
+
+</launch>
