@@ -189,6 +189,9 @@ def generate_bcr_robot_group(robot_name, x, y, yaw):
 
         remappings=[
             ('/joint_states', f'/{robot_name}/joint_states'),
+            ('/tf', 'tf'),
+            ('/tf_static', 'tf_static'),
+
         ]
     )
 
