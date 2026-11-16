@@ -203,7 +203,7 @@ def generate_launch_description():
             description='Robot namespace'
         ),
 
-        robot_state_publisher,
+       # robot_state_publisher,
         rviz
 
     ])
