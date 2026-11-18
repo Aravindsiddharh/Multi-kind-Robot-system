@@ -471,6 +471,7 @@ def generate_launch_description():
             'odom_frame_id': f'{ns}/odom',
             'fixed_frame': f'{ns}/odom',
             'odom_topic': f'/{ns}/odom',
+            'topic': f'/{ns}/scan',
             # RewrittenYaml accepts full parameter paths for scoped changes.
             # Do NOT rewrite all global_frame leaves: global costmap stays in map.
             'local_costmap.local_costmap.ros__parameters.global_frame': f'{ns}/odom',

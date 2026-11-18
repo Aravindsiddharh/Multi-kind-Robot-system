@@ -131,7 +131,7 @@
 
 
 
-
+import os
 
 from os.path import join
 
@@ -151,6 +151,7 @@ from launch_ros.actions import Node
 def generate_bcr_robot_group(robot_name, x, y, yaw):
 
     bcr_bot_path = get_package_share_directory('bcr_bot')
+    twist_mux_params = os.path.join(bcr_bot_path, 'config', 'twist_mux.yaml')
 
     xacro_path = join(
         bcr_bot_path,
@@ -324,6 +325,16 @@ def generate_bcr_robot_group(robot_name, x, y, yaw):
         ]
     )
 
+    twist_mux = Node(
+        package='twist_mux',
+        executable='twist_mux',
+        namespace=robot_name,
+        name='twist_mux',
+        output='screen',
+        parameters=[twist_mux_params, {'use_sim_time': True}],
+        remappings=[('cmd_vel_out', 'cmd_vel')],
+    )
+
     # --------------------------------------------------------
     # RETURN ROBOT GROUP
     # --------------------------------------------------------
@@ -332,6 +343,7 @@ def generate_bcr_robot_group(robot_name, x, y, yaw):
         robot_state_publisher,
         spawn_robot,
         gz_ros2_bridge,
+        twist_mux
     ])
 
 
