@@ -361,6 +361,14 @@
 
 
 
+
+
+
+
+
+
+
+
 # Copyright (c) 2018 Intel Corporation
 # Licensed under the Apache License, Version 2.0
 # Modified for multi-robot Nav2 launch on ROS 2 Jazzy.
@@ -380,7 +388,7 @@ from nav2_common.launch import RewrittenYaml
 # Change this list to add/remove robots, as in your previous launch file.
 ROBOTS = [
     {'name': 'robot1'},
-    {'name': 'robot2'},
+    # {'name': 'robot2'},
     # {'name': 'robot3'},
 ]
 
@@ -392,20 +400,20 @@ NAV2_SERVERS = [
      'nav2_smoother::SmootherServer'),
     ('nav2_planner', 'planner_server', 'planner_server',
      'nav2_planner::PlannerServer'),
-    ('nav2_route', 'route_server', 'route_server',
-     'nav2_route::RouteServer'),
+    # ('nav2_route', 'route_server', 'route_server',
+    #  'nav2_route::RouteServer'),
     ('nav2_behaviors', 'behavior_server', 'behavior_server',
      'behavior_server::BehaviorServer'),
     ('nav2_velocity_smoother', 'velocity_smoother', 'velocity_smoother',
      'nav2_velocity_smoother::VelocitySmoother'),
-    ('nav2_collision_monitor', 'collision_monitor', 'collision_monitor',
-     'nav2_collision_monitor::CollisionMonitor'),
+    # ('nav2_collision_monitor', 'collision_monitor', 'collision_monitor',
+    #  'nav2_collision_monitor::CollisionMonitor'),
     ('nav2_bt_navigator', 'bt_navigator', 'bt_navigator',
      'nav2_bt_navigator::BtNavigator'),
     ('nav2_waypoint_follower', 'waypoint_follower', 'waypoint_follower',
      'nav2_waypoint_follower::WaypointFollower'),
-    ('opennav_docking', 'opennav_docking', 'docking_server',
-     'opennav_docking::DockingServer'),
+    # ('opennav_docking', 'opennav_docking', 'docking_server',
+    #  'opennav_docking::DockingServer'),
 ]
 
 
@@ -424,7 +432,7 @@ def generate_launch_description():
     ld.add_action(SetEnvironmentVariable('RCUTILS_LOGGING_BUFFERED_STREAM', '1'))
 
     ld.add_action(DeclareLaunchArgument(
-        'use_sim_time', default_value='false',
+        'use_sim_time', default_value='true',
         description='Use the simulation clock'))
     ld.add_action(DeclareLaunchArgument(
         'autostart', default_value='true',
@@ -453,13 +461,20 @@ def generate_launch_description():
         if not ns:
             raise ValueError('Robot namespace must not be empty')
 
-        # Reuse the same YAML template for each robot with a unique root key.
-        # Do not globally rewrite 'global_frame' or 'topic': those keys may
-        # apply to both global and local costmaps, or unrelated plugins.
+        # One YAML template per robot, rewritten with scoped frame parameters.
+        # Map frame stays shared; odom/base and ROS topics are robot-specific.
         robot_param_subs = {
             'use_sim_time': use_sim_time,
             'robot_base_frame': f'{ns}/base_link',
+            'base_frame': f'{ns}/base_link',
+            'base_frame_id': f'{ns}/base_link',
+            'odom_frame_id': f'{ns}/odom',
+            'fixed_frame': f'{ns}/odom',
             'odom_topic': f'/{ns}/odom',
+            # RewrittenYaml accepts full parameter paths for scoped changes.
+            # Do NOT rewrite all global_frame leaves: global costmap stays in map.
+            'local_costmap.local_costmap.ros__parameters.global_frame': f'{ns}/odom',
+            'behavior_server.ros__parameters.local_frame': f'{ns}/odom',
         }
         robot_params = ParameterFile(
             RewrittenYaml(
@@ -477,7 +492,18 @@ def generate_launch_description():
 
         def node_remappings(name):
             remaps = list(tf_remappings)
-            if name in ('controller_server', 'behavior_server', 'velocity_smoother'):
+            if name in ('controller_server', 'behavior_server'):
+                # Nav2 controller / recovery output -> smoother input.
+                remaps.append(('cmd_vel', 'cmd_vel_nav'))
+            elif name == 'velocity_smoother':
+                # Smoother input -> final drive topic consumed by ros_gz_bridge.
+                # Relative names expand to /robot1/... or /robot2/....
+                # This direct pipeline is for when collision_monitor is disabled.
+                remaps.extend([
+                    ('cmd_vel', 'cmd_vel_nav'),
+                    ('cmd_vel_smoothed', 'cmd_vel'),
+                ])
+            elif name == 'docking_server':
                 remaps.append(('cmd_vel', 'cmd_vel_nav'))
             return remaps
 
@@ -491,7 +517,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
-                parameters=[robot_params],
+                parameters=[robot_params, {'use_sim_time': use_sim_time}],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=node_remappings(name),
             ))
@@ -518,7 +544,7 @@ def generate_launch_description():
                 plugin=plugin,
                 name=name,
                 namespace=ns,
-                parameters=[robot_params],
+                parameters=[robot_params, {'use_sim_time': use_sim_time}],
                 remappings=node_remappings(name),
             )
             for package, executable, name, plugin in NAV2_SERVERS
