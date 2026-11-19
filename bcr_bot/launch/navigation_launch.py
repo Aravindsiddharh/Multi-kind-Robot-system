@@ -502,7 +502,7 @@ def generate_launch_description():
                 # This direct pipeline is for when collision_monitor is disabled.
                 remaps.extend([
                     ('cmd_vel', 'cmd_vel_nav'),
-                    ('cmd_vel_smoothed', 'cmd_vel'),
+                    # ('cmd_vel_smoothed', 'cmd_vel'),
                 ])
             elif name == 'docking_server':
                 remaps.append(('cmd_vel', 'cmd_vel_nav'))

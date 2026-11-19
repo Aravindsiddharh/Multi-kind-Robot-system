@@ -13,6 +13,9 @@ Panels:
         - /Map2
         - /Map3
         - /Path1
+        - /Polygon1
+        - /Polygon1/Topic1
+        - /Polygon2
       Splitter Ratio: 0.5
     Tree Height: 1474
   - Class: rviz_common/Selection
@@ -258,6 +261,32 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /robot1/plan
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/Polygon
+      Color: 26; 95; 180
+      Enabled: true
+      Name: Polygon
+      Topic:
+        Depth: 5
+        Durability Policy: Transient Local
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot1/polygon_slowdown
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/Polygon
+      Color: 0; 0; 0
+      Enabled: true
+      Name: Polygon
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot1/polygon_stop
       Value: true
   Enabled: true
   Global Options:
