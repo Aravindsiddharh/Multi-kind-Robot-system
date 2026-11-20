@@ -32,7 +32,7 @@ def generate_launch_description():
 
     robots = [
         'robot1',
-        # 'robot2',
+        'robot2',
     ]
 
     lifecycle_nodes = ['collision_monitor']

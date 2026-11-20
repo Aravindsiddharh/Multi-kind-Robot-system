@@ -388,7 +388,7 @@ from nav2_common.launch import RewrittenYaml
 # Change this list to add/remove robots, as in your previous launch file.
 ROBOTS = [
     {'name': 'robot1'},
-    # {'name': 'robot2'},
+    {'name': 'robot2'},
     # {'name': 'robot3'},
 ]
 

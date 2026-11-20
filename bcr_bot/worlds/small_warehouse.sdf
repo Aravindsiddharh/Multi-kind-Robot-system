@@ -2,7 +2,12 @@
 <sdf version="1.6">
   <world name="default">
 
-    
+  <gazebo>
+        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+  </gazebo>
+
     <model name="aws_robomaker_warehouse_RoofB_01_001">
         <include>
             <uri>model://aws_robomaker_warehouse_RoofB_01</uri>
