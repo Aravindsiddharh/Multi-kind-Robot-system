@@ -260,7 +260,7 @@ def generate_bcr_robot_group(robot_name, x, y, yaw):
         # ----------------------------------------------------
 
         # Xacro specifies <topic>scan</topic>
-        '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
+        f'/{robot_name}/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
 
         # ----------------------------------------------------
         # KINECT CAMERA
@@ -317,11 +317,11 @@ def generate_bcr_robot_group(robot_name, x, y, yaw):
                 f'/{robot_name}/joint_states'
             ),
 
-            # LiDAR topic remapping
-            (
-                '/scan',
-                f'/{robot_name}/scan'
-            ),
+            # # LiDAR topic remapping
+            # (
+            #     '/scan',
+            #     f'/{robot_name}/scan'
+            # ),
         ]
     )
 

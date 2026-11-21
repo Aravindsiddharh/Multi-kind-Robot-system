@@ -338,7 +338,7 @@ def generate_launch_description():
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value='true',
         description='Use simulation clock'
     )
 
@@ -572,7 +572,8 @@ def generate_launch_description():
             respawn_delay=2.0,
 
             parameters=[
-                robot_params
+                robot_params,
+                {'use_sim_time': use_sim_time}
             ],
 
             arguments=[

@@ -13,7 +13,7 @@ install( DIRECTORY config/
 
 install(PROGRAMS 
         scripts/initial_pose_publisher.py
-        #scripts/tf_aggregator.py
+        scripts/multi_robot_tf_relay.py
         # scripts/multi_robot_obstacle_node.py
         # scripts/remapper.py
         # scripts/goal_relay.py

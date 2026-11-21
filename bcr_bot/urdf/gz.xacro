@@ -53,7 +53,7 @@
     <xacro:if value="$(arg two_d_lidar_enabled)">
         <gazebo reference="$(arg robot_namespace)/two_d_lidar">
             <sensor name='gpu_lidar' type='gpu_lidar'>
-                <topic>scan</topic>
+                <topic>$(arg robot_namespace)/scan</topic>
                 <update_rate>${two_d_lidar_update_rate}</update_rate>
                 <gz_frame_id>$(arg robot_namespace)/two_d_lidar</gz_frame_id>
                 <lidar>

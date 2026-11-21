@@ -71,44 +71,29 @@
 #!/usr/bin/env python3
 
 import os
-import xacro
 
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+
 from launch_ros.actions import Node
-
-
-def get_xacro_to_doc(xacro_file_path, mappings):
-    doc = xacro.parse(open(xacro_file_path))
-    xacro.process_doc(doc, mappings=mappings)
-    return doc
 
 
 def generate_launch_description():
 
-    # =================================================
-    # LAUNCH CONFIGURATIONS
-    # =================================================
+    # ==========================================
+    # LAUNCH CONFIGURATION
+    # ==========================================
 
     use_sim_time = LaunchConfiguration('use_sim_time')
-    isaac_sim = LaunchConfiguration('isaac_sim')
-    robot_name = LaunchConfiguration('robot_name')
 
-    # =================================================
+    # ==========================================
     # PACKAGE PATHS
-    # =================================================
+    # ==========================================
 
     pkg_share = get_package_share_directory('bcr_bot')
-
-    xacro_path = os.path.join(
-        pkg_share,
-        'urdf',
-        'bcr_bot.xacro'
-    )
 
     rviz_config = os.path.join(
         pkg_share,
@@ -116,55 +101,28 @@ def generate_launch_description():
         'multirobot.rviz'
     )
 
-    # =================================================
-    # ROBOT DESCRIPTION
-    # =================================================
+    # ==========================================
+    # MULTI-ROBOT TF RELAY
+    # ==========================================
 
-    doc = get_xacro_to_doc(
-        xacro_path,
-        {"wheel_odom_topic": "odom"}
-    )
-
-    # =================================================
-    # ROBOT STATE PUBLISHER
-    # =================================================
-
-    robot_state_publisher = Node(
-
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-
-        namespace=robot_name,
-        name='robot_state_publisher',
-
+    tf_relay = Node(
+        package='bcr_bot',
+        executable='multi_robot_tf_relay.py',
+        name='multi_robot_tf_relay',
         output='screen',
-
         parameters=[
-            {
-                'use_sim_time': use_sim_time,
-                'robot_description': doc.toxml()
-            }
-        ],
-
-        remappings=[
-            ('/tf', ['/', robot_name, '/tf']),
-            ('/tf_static', ['/', robot_name, '/tf_static'])
-        ],
-
-        condition=UnlessCondition(isaac_sim)
+            {'use_sim_time': use_sim_time}
+        ]
     )
 
-    # =================================================
+    # ==========================================
     # RVIZ
-    # =================================================
+    # ==========================================
 
     rviz = Node(
-
         package='rviz2',
         executable='rviz2',
-
         name='rviz2',
-
         output='screen',
 
         arguments=[
@@ -172,38 +130,26 @@ def generate_launch_description():
             rviz_config
         ],
 
-        remappings=[
-            ('/tf', ['/', robot_name, '/tf']),
-            ('/tf_static', ['/', robot_name, '/tf_static'])
+        parameters=[
+            {'use_sim_time': use_sim_time}
         ]
 
+        # No TF remapping here.
+        # RViz subscribes to /tf and /tf_static.
     )
 
-    # =================================================
+    # ==========================================
     # LAUNCH DESCRIPTION
-    # =================================================
+    # ==========================================
 
     return LaunchDescription([
 
         DeclareLaunchArgument(
             'use_sim_time',
-            default_value='false',
-            description='Use simulation time'
+            default_value='true',
+            description='Use Gazebo simulation time'
         ),
 
-        DeclareLaunchArgument(
-            'isaac_sim',
-            default_value='false',
-            description='Set true when using Isaac Sim'
-        ),
-
-        DeclareLaunchArgument(
-            'robot_name',
-            default_value='robot1',
-            description='Robot namespace'
-        ),
-
-       # robot_state_publisher,
+        tf_relay,
         rviz
-
     ])
