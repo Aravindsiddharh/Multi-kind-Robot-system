@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 
 import rclpy
@@ -5,38 +6,100 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from action_msgs.srv import CancelGoal
 
+
 class CancelViaPublisher(Node):
+
     def __init__(self):
         super().__init__('cancel_via_publisher')
 
-        # Subscriber (fake publisher interface)
-        self.sub = self.create_subscription(String, 'nav_cancel', self.cancel_callback, 10)
-        self.cli = self.create_client(CancelGoal, '/navigate_to_pose/_action/cancel_goal')
+        self.sub = self.create_subscription(
+            String,
+            'nav_cancel',
+            self.cancel_callback,
+            10
+        )
 
-        self.get_logger().info("Listening on /nav_cancel topic. Publish 'cancel' to stop goals.")
+        # Relative path supports robot namespaces
+        self.cli = self.create_client(
+            CancelGoal,
+            'navigate_to_pose/_action/cancel_goal'
+        )
+
+        self.get_logger().info(
+            'CancelViaPublisher ready. '
+            'Publish "cancel" to nav_cancel.'
+        )
 
     def cancel_callback(self, msg):
-        if msg.data.strip().lower() == "cancel":
-            if not self.cli.wait_for_service(timeout_sec=2.0):
-                self.get_logger().error("Cancel service not available!")
-                return
-            req = CancelGoal.Request()
-            future = self.cli.call_async(req)
-            future.add_done_callback(self.done_callback)
+
+        command = msg.data.strip().lower()
+
+        if command != 'cancel':
+            self.get_logger().warn(
+                f'Unknown command: {command}'
+            )
+            return
+
+        if not self.cli.service_is_ready():
+            self.get_logger().error(
+                'NavigateToPose cancel service '
+                'is not available.'
+            )
+            return
+
+        # Empty goal_info requests cancellation
+        # of all eligible goals on this action.
+        request = CancelGoal.Request()
+
+        future = self.cli.call_async(request)
+        future.add_done_callback(
+            self.done_callback
+        )
+
+        self.get_logger().warn(
+            'Navigation cancellation requested.'
+        )
 
     def done_callback(self, future):
+
         try:
-            res = future.result()
-            self.get_logger().warn(f"Cancel request sent. {len(res.goals_canceling)} goals being canceled.")
-        except Exception as e:
-            self.get_logger().error(f"Cancel call failed: {e}")
+            response = future.result()
+
+            if response.return_code == (
+                CancelGoal.Response.ERROR_NONE
+            ):
+                count = len(response.goals_canceling)
+
+                self.get_logger().info(
+                    f'Cancellation accepted for '
+                    f'{count} goal(s).'
+                )
+
+            else:
+                self.get_logger().error(
+                    'Cancellation failed. '
+                    f'Return code: {response.return_code}'
+                )
+
+        except Exception as exc:
+            self.get_logger().error(
+                f'Cancel call failed: {exc}'
+            )
+
 
 def main(args=None):
+
     rclpy.init(args=args)
     node = CancelViaPublisher()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
 
-if __name__ == "__main__":
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.try_shutdown()
+
+
+if __name__ == '__main__':
     main()
