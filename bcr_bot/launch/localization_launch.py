@@ -501,13 +501,13 @@ def generate_launch_description():
             'yaw': 0.0
         },
 
-        {
-            'name': 'robot2',
-            'x': 0.0,
-            'y': -2.0,
-            'z': 0.0,
-            'yaw': 0.0
-        }
+        # {
+        #     'name': 'robot2',
+        #     'x': 0.0,
+        #     'y': -2.0,
+        #     'z': 0.0,
+        #     'yaw': 0.0
+        # }
 
     ]
 

@@ -391,13 +391,13 @@ def generate_launch_description():
 
     # Uncomment when you want to spawn another BCR robot.
 
-    ld.add_action(
-        generate_bcr_robot_group(
-            'robot2',
-            0.0,
-            -2.0,
-            0.0
-        )
-    )
+    # ld.add_action(
+    #     generate_bcr_robot_group(
+    #         'robot2',
+    #         0.0,
+    #         -2.0,
+    #         0.0
+    #     )
+    # )
 
     return ld
