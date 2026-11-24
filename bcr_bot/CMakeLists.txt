@@ -20,7 +20,7 @@ install(PROGRAMS
         # scripts/collision_detector.py
         # scripts/controller_switch_node.py
         # scripts/goal_cancel_node.py
-        # scripts/start_stop.py
+        scripts/start_stop.py
         DESTINATION lib/${PROJECT_NAME})
 
          
