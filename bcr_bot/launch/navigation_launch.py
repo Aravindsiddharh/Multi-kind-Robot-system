@@ -537,12 +537,30 @@ def generate_launch_description():
             }],
             arguments=['--ros-args', '--log-level', log_level],
         ))
-        
+
         ld.add_action(
             Node(
                 package='bcr_bot',
                 executable='start_stop.py',
                 name='pause_resume_nav',
+                namespace=ns,
+                output='screen',
+                parameters=[{
+                    'use_sim_time': use_sim_time,
+                }],
+                arguments=[
+                    '--ros-args',
+                    '--log-level',
+                    log_level,
+                ],
+            )
+        )
+
+        ld.add_action(
+            Node(
+                package='bcr_bot',
+                executable='goal_cancel_node.py',
+                name='cancel_nav_goal',
                 namespace=ns,
                 output='screen',
                 parameters=[{

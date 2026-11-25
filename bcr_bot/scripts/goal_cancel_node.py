@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 import rclpy
@@ -14,7 +13,7 @@ class CancelViaPublisher(Node):
 
         self.sub = self.create_subscription(
             String,
-            'nav_cancel',
+            'goal_cancel',
             self.cancel_callback,
             10
         )
