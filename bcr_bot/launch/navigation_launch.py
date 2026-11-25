@@ -537,6 +537,25 @@ def generate_launch_description():
             }],
             arguments=['--ros-args', '--log-level', log_level],
         ))
+        
+        ld.add_action(
+            Node(
+                package='bcr_bot',
+                executable='start_stop.py',
+                name='pause_resume_nav',
+                namespace=ns,
+                output='screen',
+                parameters=[{
+                    'use_sim_time': use_sim_time,
+                }],
+                arguments=[
+                    '--ros-args',
+                    '--log-level',
+                    log_level,
+                ],
+            )
+        )
+
 
         # Composition mode: one container per robot, no container name clash.
         component_descriptions = [
